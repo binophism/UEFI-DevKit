@@ -420,11 +420,10 @@ new shell.
 
 ---
 
-## Author
+## Authors
 
-**MohammadMahdi Anbaraki**
-
-- Repository: [github.com/binophism/UEFI-DevKit](https://github.com/binophism/UEFI-DevKit)
+- **MohammadMahdi Anbaraki**
+- **Amir Mohammad Jahangirzad**
 
 Issues and feature requests are welcome through the GitHub issue tracker.
 
