@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>UEFI DXE Driver Template</Title>
+      <Author>MohammadMahdi Anbaraki</Author>
+      <Description>Standard UEFI DXE Driver entry point (DriverEntry)</Description>
+      <Shortcut>uefidxe</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>DriverName</ID>
+          <ToolTip>Driver Name</ToolTip>
+          <Default>MyDxeDriver</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="cpp">
+        <![CDATA[
+#include <Uefi.h>
+#include <Library/UefiLib.h>
+#include <Library/UefiBootServicesTableLib.h>
+#include <Library/UefiDriverEntryPoint.h>
+#include <Library/DebugLib.h>
+
+/**
+  Entry point of the DXE Driver.
+
+  @param[in] ImageHandle    The firmware allocated handle for the EFI image.
+  @param[in] SystemTable    A pointer to the EFI System Table.
+
+  @retval EFI_SUCCESS       The driver initialized successfully.
+  @retval other             Failed to initialize.
+**/
+EFI_STATUS EFIAPI $DriverName$EntryPoint (IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
+{
+  DEBUG((DEBUG_INFO, "[$DriverName$] Driver initialized successfully.\n"));
+
+  return EFI_SUCCESS;
+}
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

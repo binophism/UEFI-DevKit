@@ -1,0 +1,21 @@
+<Project>
+
+  <!--
+    Keep every MSBuild output (bin, obj, NuGet restore files) out of the source tree and under
+    <repo>\build, next to the generated Visual Studio solution and the CMake build output.
+    This applies no matter how the project is built: from the CMake-generated solution, from
+    Visual Studio directly, or with msbuild on the command line.
+
+    The file lives in src\ on purpose: the CMake-generated projects in <repo>\build are not under
+    src\, so they do not pick it up.
+  -->
+  <PropertyGroup>
+    <UefiBuildRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..', 'build'))</UefiBuildRoot>
+    <BaseOutputPath>$(UefiBuildRoot)bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(UefiBuildRoot)obj\</BaseIntermediateOutputPath>
+
+    <!-- Ignore leftovers from older builds that wrote into the project folder (bin\, obj\). -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin/**;obj/**</DefaultItemExcludes>
+  </PropertyGroup>
+
+</Project>

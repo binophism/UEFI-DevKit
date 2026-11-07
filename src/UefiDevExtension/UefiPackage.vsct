@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+
+  <Commands package="guidUefiPackage">
+    <Menus>
+      <!-- Submenu inside the Extensions menu -->
+      <Menu guid="guidUefiPackageCmdSet" id="UefiExtensionsSubMenu" priority="0x0100" type="Menu">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiExtMenuGroup" />
+        <Strings>
+          <ButtonText>UEFI Development</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Groups>
+      <!-- Commands inside the Extensions -> UEFI Development submenu -->
+      <Group guid="guidUefiPackageCmdSet" id="UefiExtMenuGroup" priority="0x0100">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_EXTENSIONS" />
+      </Group>
+
+      <Group guid="guidUefiPackageCmdSet" id="UefiWindowGroup" priority="0x0100">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiExtensionsSubMenu" />
+      </Group>
+
+      <Group guid="guidUefiPackageCmdSet" id="UefiBuildGroup" priority="0x0200">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiExtensionsSubMenu" />
+      </Group>
+
+      <Group guid="guidUefiPackageCmdSet" id="UefiEmulatorGroup" priority="0x0300">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiExtensionsSubMenu" />
+      </Group>
+
+      <Group guid="guidUefiPackageCmdSet" id="UefiHelpersGroup" priority="0x0400">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiExtensionsSubMenu" />
+      </Group>
+
+      <Group guid="guidUefiPackageCmdSet" id="UefiConfigGroup" priority="0x0500">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiExtensionsSubMenu" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidUefiPackageCmdSet" id="cmdidToolWindow" priority="0x0100" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiWindowGroup" />
+        <Icon guid="ImageCatalogGuid" id="Processor" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>UEFI Tools &amp; Explorer</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidUefiPackageCmdSet" id="cmdidBuild" priority="0x0100" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiBuildGroup" />
+        <Icon guid="ImageCatalogGuid" id="BuildSolution" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Build Active UEFI Target (DSC)</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidUefiPackageCmdSet" id="cmdidRebuild" priority="0x0200" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiBuildGroup" />
+        <Icon guid="ImageCatalogGuid" id="Refresh" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Rebuild Active UEFI Target</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidUefiPackageCmdSet" id="cmdidClean" priority="0x0300" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiBuildGroup" />
+        <Icon guid="ImageCatalogGuid" id="CleanData" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Clean UEFI Target Build Artifacts</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidUefiPackageCmdSet" id="cmdidRunQemu" priority="0x0100" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiEmulatorGroup" />
+        <Icon guid="ImageCatalogGuid" id="Run" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Run in QEMU (OVMF)</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidUefiPackageCmdSet" id="cmdidGuidGenerator" priority="0x0100" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiHelpersGroup" />
+        <Icon guid="ImageCatalogGuid" id="Key" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>EFI GUID Generator...</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidUefiPackageCmdSet" id="cmdidInsertGuid" priority="0x0200" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiHelpersGroup" />
+        <Icon guid="ImageCatalogGuid" id="Paste" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Insert EFI GUID at Caret</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidUefiPackageCmdSet" id="cmdidOpenPrompt" priority="0x0100" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiConfigGroup" />
+        <Icon guid="ImageCatalogGuid" id="Console" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Open UEFI Developer Shell</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidUefiPackageCmdSet" id="cmdidOptions" priority="0x0200" type="Button">
+        <Parent guid="guidUefiPackageCmdSet" id="UefiConfigGroup" />
+        <Icon guid="ImageCatalogGuid" id="Settings" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>UEFI Development Settings...</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <CommandPlacements>
+    <!-- Place Tool Window button in Tools menu as well -->
+    <CommandPlacement guid="guidUefiPackageCmdSet" id="cmdidToolWindow" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLS_EXT_CUST" />
+    </CommandPlacement>
+    
+  </CommandPlacements>
+
+  <KeyBindings>
+    <KeyBinding guid="guidUefiPackageCmdSet" id="cmdidBuild" editor="guidVSStd97" key1="B" mod1="Control Alt" />
+    <KeyBinding guid="guidUefiPackageCmdSet" id="cmdidRunQemu" editor="guidVSStd97" key1="Q" mod1="Control Alt" />
+    <KeyBinding guid="guidUefiPackageCmdSet" id="cmdidGuidGenerator" editor="guidVSStd97" key1="G" mod1="Control Alt" />
+  </KeyBindings>
+
+  <Symbols>
+    <GuidSymbol name="guidUefiPackage" value="{9260c634-8c77-4c31-98ee-1f0f4a8eb2c1}" />
+    <GuidSymbol name="guidUefiPackageCmdSet" value="{a8e1b3d2-35c6-4e08-9df2-5d9c10825310}">
+      <IDSymbol name="UefiExtMenuGroup" value="0x1015" />
+      <IDSymbol name="UefiExtensionsSubMenu" value="0x1025" />
+      <IDSymbol name="UefiWindowGroup" value="0x1030" />
+      <IDSymbol name="UefiBuildGroup" value="0x1031" />
+      <IDSymbol name="UefiEmulatorGroup" value="0x1032" />
+      <IDSymbol name="UefiHelpersGroup" value="0x1033" />
+      <IDSymbol name="UefiConfigGroup" value="0x1034" />
+
+      <IDSymbol name="cmdidBuild" value="0x0100" />
+      <IDSymbol name="cmdidRebuild" value="0x0101" />
+      <IDSymbol name="cmdidClean" value="0x0102" />
+      <IDSymbol name="cmdidRunQemu" value="0x0103" />
+      <IDSymbol name="cmdidGuidGenerator" value="0x0104" />
+      <IDSymbol name="cmdidInsertGuid" value="0x0105" />
+      <IDSymbol name="cmdidOpenPrompt" value="0x0106" />
+      <IDSymbol name="cmdidToolWindow" value="0x0107" />
+      <IDSymbol name="cmdidOptions" value="0x0108" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

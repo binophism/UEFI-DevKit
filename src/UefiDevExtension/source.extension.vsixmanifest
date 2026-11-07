@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="UefiDevExtension.14f2e519-7225-4ad9-906f-402919d356c9" Version="1.0.2" Language="en-US" Publisher="MohammadMahdi Anbaraki" />
+    <DisplayName>UEFI Dev Kit</DisplayName>
+    <Description xml:space="preserve">UEFI Dev Kit - a complete UEFI (EDK II / TianoCore) development experience for Visual Studio. Features syntax highlighting for .inf, .dec, .dsc, .fdf, .uni, .vfr, .asl, EDK II build runner, QEMU/OVMF emulation, and EFI GUID generator. Developed by MohammadMahdi Anbaraki.</Description>
+    <Icon>Resources\UefiPackage.ico</Icon>
+    <PreviewImage>Resources\UefiPackage.ico</PreviewImage>
+    <Tags>UEFI;EDK2;TianoCore;BIOS;Firmware;QEMU;INF;DEC;DSC;FDF;ASL;VFR;GUID;UEFI Dev Kit</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 19.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+    <InstallationTarget Id="Microsoft.VisualStudio.Professional" Version="[17.0, 19.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.0, 19.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
+  </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0, 19.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" Path="ProjectTemplates" />
+  </Assets>
+</PackageManifest>

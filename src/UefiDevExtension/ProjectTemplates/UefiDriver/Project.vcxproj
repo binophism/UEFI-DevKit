@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>MakeFileProj</Keyword>
+    <ProjectGuid>{$guid1$}</ProjectGuid>
+    <RootNamespace>$safeprojectname$</RootNamespace>
+    <ProjectName>$safeprojectname$</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>/Zc:wchar_t- %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NMakeBuildCommandLine>cmd.exe /c "call edksetup.bat >nul 2>&amp;1 &amp;&amp; build -p $safeprojectname$.dsc -a X64 -t VS2026 -b DEBUG"</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>cmd.exe /c "call edksetup.bat >nul 2>&amp;1 &amp;&amp; build clean -p $safeprojectname$.dsc &amp;&amp; build -p $safeprojectname$.dsc -a X64 -t VS2026 -b DEBUG"</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>cmd.exe /c "call edksetup.bat >nul 2>&amp;1 &amp;&amp; build clean -p $safeprojectname$.dsc"</NMakeCleanCommandLine>
+    <NMakeOutput>Build\$safeprojectname$\DEBUG_VS2026\X64\$safeprojectname$.efi</NMakeOutput>
+    <NMakeIncludeSearchPath>$(WORKSPACE)\MdePkg\Include;$(WORKSPACE)\MdePkg\Include\X64;$(WORKSPACE)\MdeModulePkg\Include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <NMakeBuildCommandLine>cmd.exe /c "call edksetup.bat >nul 2>&amp;1 &amp;&amp; build -p $safeprojectname$.dsc -a X64 -t VS2026 -b RELEASE"</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>cmd.exe /c "call edksetup.bat >nul 2>&amp;1 &amp;&amp; build clean -p $safeprojectname$.dsc &amp;&amp; build -p $safeprojectname$.dsc -a X64 -t VS2026 -b RELEASE"</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>cmd.exe /c "call edksetup.bat >nul 2>&amp;1 &amp;&amp; build clean -p $safeprojectname$.dsc"</NMakeCleanCommandLine>
+    <NMakeOutput>Build\$safeprojectname$\RELEASE_VS2026\X64\$safeprojectname$.efi</NMakeOutput>
+    <NMakeIncludeSearchPath>$(WORKSPACE)\MdePkg\Include;$(WORKSPACE)\MdePkg\Include\X64;$(WORKSPACE)\MdeModulePkg\Include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="$safeprojectname$.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$safeprojectname$.inf" />
+    <None Include="$safeprojectname$.dsc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

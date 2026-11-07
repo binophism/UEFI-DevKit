@@ -1,0 +1,296 @@
+<UserControl x:Class="UefiDevExtension.ToolWindows.UefiToolWindowControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vsui="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="420"
+             Background="{DynamicResource {x:Static vsui:EnvironmentColors.ToolWindowBackgroundBrushKey}}"
+             Foreground="{DynamicResource {x:Static vsui:EnvironmentColors.ToolWindowTextBrushKey}}"
+             FontFamily="Segoe UI" FontSize="12"
+             UseLayoutRounding="True">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UefiDevExtension;component/Themes/UefiStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <ScrollViewer Style="{DynamicResource {x:Static vsshell:VsResourceKeys.ScrollViewerStyleKey}}"
+                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+        <Grid Margin="16,14,16,4" MaxWidth="1180">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- ============================================================ Header -->
+            <DockPanel Grid.Row="0" Margin="0,0,0,14">
+                <Button DockPanel.Dock="Right" Style="{StaticResource Uefi.IconButton}" Content="&#xE713;"
+                        VerticalAlignment="Center" Click="OpenSettings_Click"
+                        ToolTip="UEFI Development settings" AutomationProperties.Name="UEFI Development settings"/>
+                <Border DockPanel.Dock="Left" Width="32" Height="32" CornerRadius="7" Margin="0,0,11,0"
+                        Background="{StaticResource Uefi.BrandBrush}">
+                    <TextBlock Text="&#xE950;" Style="{StaticResource Uefi.Icon}" FontSize="17" Foreground="White"/>
+                </Border>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="UEFI Development Kit" Style="{StaticResource Uefi.Title}"/>
+                    <TextBlock Text="EDK II · TianoCore tooling for Visual Studio" Style="{StaticResource Uefi.Subtitle}"/>
+                </StackPanel>
+            </DockPanel>
+
+            <!-- ============================================================ Cards
+                 One column when narrow; two columns once the window is wide enough (see UpdateLayoutMode). -->
+            <Grid x:Name="CardsGrid" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition x:Name="GutterColumn" Width="0"/>
+                    <ColumnDefinition x:Name="RightColumn" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0">
+
+                    <!-- Workspace -->
+                    <HeaderedContentControl Style="{StaticResource Uefi.Card}" Header="Workspace" Tag="&#xED25;">
+                        <StackPanel>
+                            <TextBlock Text="EDK II root" Style="{StaticResource Uefi.Caption}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="WorkspacePathTextBox" Style="{StaticResource Uefi.MonoTextBox}"
+                                         Text="D:\edk2" AutomationProperties.Name="EDK II root"
+                                         ToolTip="Folder that contains MdePkg and edksetup.bat"/>
+                                <Button Grid.Column="1" Style="{StaticResource Uefi.Button}" Width="32" Padding="0" Margin="6,0,0,0"
+                                        FontFamily="{StaticResource Uefi.IconFont}" Content="&#xED25;"
+                                        Click="BrowseWorkspace_Click"
+                                        ToolTip="Browse for the EDK II root folder" AutomationProperties.Name="Browse for the EDK II root folder"/>
+                            </Grid>
+
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="SetWorkspaceButton" Grid.Column="0" Style="{StaticResource Uefi.PrimaryButton}"
+                                        Content="Apply &amp; fix headers" Click="SetWorkspace_Click"
+                                        ToolTip="Set WORKSPACE for this session and your user account, and add the EDK II include paths to the projects in the open solution"/>
+                                <Button x:Name="AutoDetectButton" Grid.Column="2" Style="{StaticResource Uefi.Button}"
+                                        Tag="&#xE721;" Content="Auto-detect" Click="AutoDetect_Click"
+                                        ToolTip="Look for an EDK II checkout in the usual locations (D:\edk2, C:\edk2, …)"/>
+                            </Grid>
+
+                            <Border x:Name="WorkspaceFeedback" Style="{StaticResource Uefi.Callout}">
+                                <DockPanel>
+                                    <TextBlock x:Name="WorkspaceFeedbackIcon" DockPanel.Dock="Left" Style="{StaticResource Uefi.Icon}"
+                                               VerticalAlignment="Top" Margin="0,2,8,0"/>
+                                    <TextBlock x:Name="WorkspaceFeedbackText" TextWrapping="Wrap" FontSize="11.5"/>
+                                </DockPanel>
+                            </Border>
+                        </StackPanel>
+                    </HeaderedContentControl>
+
+                    <!-- Build -->
+                    <HeaderedContentControl Style="{StaticResource Uefi.Card}" Header="Build" Tag="&#xE90F;">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Architecture" Style="{StaticResource Uefi.Caption}"/>
+                                    <ComboBox x:Name="ArchComboBox" Style="{StaticResource Uefi.ComboBox}"
+                                              AutomationProperties.Name="Architecture"
+                                              SelectionChanged="ArchComboBox_SelectionChanged">
+                                        <ComboBoxItem Content="X64" IsSelected="True"/>
+                                        <ComboBoxItem Content="IA32"/>
+                                        <ComboBoxItem Content="ARM"/>
+                                        <ComboBoxItem Content="AARCH64"/>
+                                        <ComboBoxItem Content="RISCV64"/>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Target" Style="{StaticResource Uefi.Caption}"/>
+                                    <ComboBox x:Name="TargetComboBox" Style="{StaticResource Uefi.ComboBox}"
+                                              AutomationProperties.Name="Build target"
+                                              SelectionChanged="TargetComboBox_SelectionChanged">
+                                        <ComboBoxItem Content="DEBUG" IsSelected="True"/>
+                                        <ComboBoxItem Content="RELEASE"/>
+                                        <ComboBoxItem Content="NOOPT"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <DockPanel Margin="0,10,0,0">
+                                <TextBlock DockPanel.Dock="Right" Text="empty = target.txt default" Style="{StaticResource Uefi.Caption}"
+                                           Opacity="0.55"/>
+                                <TextBlock Text="Toolchain tag" Style="{StaticResource Uefi.Caption}"/>
+                            </DockPanel>
+                            <TextBox x:Name="ToolchainTextBox" Style="{StaticResource Uefi.MonoTextBox}"
+                                     Text="VS2022" TextChanged="ToolchainTextBox_TextChanged"
+                                     AutomationProperties.Name="Toolchain tag"
+                                     ToolTip="Tool chain tag from Conf/tools_def.txt, for example VS2022. Leave empty to use the Conf/target.txt default."/>
+
+                            <TextBlock Text="Active platform (DSC)" Style="{StaticResource Uefi.Caption}" Margin="0,10,0,4"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="DscTextBox" Style="{StaticResource Uefi.MonoTextBox}"
+                                         TextChanged="DscTextBox_TextChanged" AutomationProperties.Name="Active platform DSC file"
+                                         ToolTip="Platform description file, relative to the workspace (for example OvmfPkg/OvmfPkgX64.dsc)"/>
+                                <Button Grid.Column="1" Style="{StaticResource Uefi.Button}" Width="32" Padding="0" Margin="6,0,0,0"
+                                        FontFamily="{StaticResource Uefi.IconFont}" Content="&#xED25;"
+                                        Click="BrowseDsc_Click"
+                                        ToolTip="Browse for a platform DSC file" AutomationProperties.Name="Browse for a platform DSC file"/>
+                            </Grid>
+
+                            <Grid Margin="0,14,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="BuildButton" Grid.Column="0" Style="{StaticResource Uefi.PrimaryButton}"
+                                        Tag="&#xE90F;" Content="Build" Click="Build_Click"
+                                        ToolTip="Build the active platform (Ctrl+Alt+B)"/>
+                                <Button x:Name="RebuildButton" Grid.Column="2" Style="{StaticResource Uefi.Button}"
+                                        Tag="&#xE72C;" Content="Rebuild" Click="Rebuild_Click"
+                                        ToolTip="Clean, then build the active platform"/>
+                                <Button x:Name="CleanButton" Grid.Column="4" Style="{StaticResource Uefi.Button}"
+                                        Tag="&#xEA99;" Content="Clean" Click="Clean_Click"
+                                        ToolTip="Remove the build output of the active platform"/>
+                            </Grid>
+
+                            <Button x:Name="QemuButton" Style="{StaticResource Uefi.RunButton}" Margin="0,8,0,0" MinHeight="30"
+                                    Tag="&#xE768;" Content="Run in QEMU (OVMF)" Click="Qemu_Click"
+                                    ToolTip="Boot the built firmware in QEMU (Ctrl+Alt+Q)"/>
+                        </StackPanel>
+                    </HeaderedContentControl>
+                </StackPanel>
+
+                <StackPanel x:Name="SecondaryStack" Grid.Row="1" Grid.Column="0">
+
+                    <!-- Environment -->
+                    <HeaderedContentControl Style="{StaticResource Uefi.Card}" Header="Environment" Tag="&#xE9D9;">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                    <RowDefinition Height="26"/>
+                                </Grid.RowDefinitions>
+
+                                <Ellipse x:Name="WorkspaceStatusDot" Grid.Row="0" Style="{StaticResource Uefi.StatusDot}" Margin="1,0,10,0"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="Workspace" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                                <TextBlock x:Name="WorkspaceStatusText" Grid.Row="0" Grid.Column="2" Text="Checking…"
+                                           VerticalAlignment="Center" Opacity="0.72" TextTrimming="CharacterEllipsis"
+                                           ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+
+                                <Ellipse x:Name="QemuStatusDot" Grid.Row="1" Style="{StaticResource Uefi.StatusDot}" Margin="1,0,10,0"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="QEMU" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                                <TextBlock x:Name="QemuStatusText" Grid.Row="1" Grid.Column="2" Text="Checking…"
+                                           VerticalAlignment="Center" Opacity="0.72" TextTrimming="CharacterEllipsis"
+                                           ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+
+                                <Ellipse x:Name="OvmfStatusDot" Grid.Row="2" Style="{StaticResource Uefi.StatusDot}" Margin="1,0,10,0"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="OVMF firmware" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                                <TextBlock x:Name="OvmfStatusText" Grid.Row="2" Grid.Column="2" Text="Checking…"
+                                           VerticalAlignment="Center" Opacity="0.72" TextTrimming="CharacterEllipsis"
+                                           ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+                            </Grid>
+
+                            <Grid Margin="0,12,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Style="{StaticResource Uefi.Button}" Tag="&#xE756;" Content="Developer shell"
+                                        Click="OpenShell_Click"
+                                        ToolTip="Open a command prompt in the workspace with edksetup.bat already applied"/>
+                                <Button Grid.Column="2" Style="{StaticResource Uefi.Button}" Tag="&#xE72C;" Content="Check again"
+                                        Click="Refresh_Click"
+                                        ToolTip="Look for the workspace, QEMU and OVMF again"/>
+                            </Grid>
+                        </StackPanel>
+                    </HeaderedContentControl>
+
+                    <!-- GUID generator -->
+                    <HeaderedContentControl Style="{StaticResource Uefi.Card}" Header="EFI GUID generator" Tag="&#xE943;">
+                        <StackPanel>
+                            <TextBlock Text="Name" Style="{StaticResource Uefi.Caption}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="GuidNameTextBox" Style="{StaticResource Uefi.TextBox}"
+                                         Text="MyCustomProtocol" TextChanged="GuidNameTextBox_TextChanged"
+                                         AutomationProperties.Name="GUID name"
+                                         ToolTip="Name used in the DEC / INF declaration"/>
+                                <Button Grid.Column="1" Style="{StaticResource Uefi.Button}" Margin="6,0,0,0"
+                                        Tag="&#xE895;" Content="New GUID" Click="GenerateGuid_Click"
+                                        ToolTip="Generate a different GUID"/>
+                            </Grid>
+
+                            <DockPanel Margin="0,12,0,4">
+                                <Button DockPanel.Dock="Right" Style="{StaticResource Uefi.IconButton}" Width="24" Height="22"
+                                        FontSize="12" Content="&#xE8C8;" Click="CopyCStruct_Click"
+                                        ToolTip="Copy C structure" AutomationProperties.Name="Copy C structure"/>
+                                <TextBlock Text="C structure (EFI_GUID)" Style="{StaticResource Uefi.Caption}"
+                                           VerticalAlignment="Center" Margin="0"/>
+                            </DockPanel>
+                            <TextBox x:Name="CStructTextBox" Style="{StaticResource Uefi.CodeBox}"
+                                     AutomationProperties.Name="C structure"/>
+
+                            <DockPanel Margin="0,10,0,4">
+                                <Button DockPanel.Dock="Right" Style="{StaticResource Uefi.IconButton}" Width="24" Height="22"
+                                        FontSize="12" Content="&#xE8C8;" Click="CopyDecFormat_Click"
+                                        ToolTip="Copy DEC / INF declaration" AutomationProperties.Name="Copy DEC / INF declaration"/>
+                                <TextBlock Text="DEC / INF declaration" Style="{StaticResource Uefi.Caption}"
+                                           VerticalAlignment="Center" Margin="0"/>
+                            </DockPanel>
+                            <TextBox x:Name="DecFormatTextBox" Style="{StaticResource Uefi.CodeBox}"
+                                     AutomationProperties.Name="DEC / INF declaration"/>
+
+                            <DockPanel Margin="0,10,0,4">
+                                <Button DockPanel.Dock="Right" Style="{StaticResource Uefi.IconButton}" Width="24" Height="22"
+                                        FontSize="12" Content="&#xE8C8;" Click="CopyRegistry_Click"
+                                        ToolTip="Copy registry format" AutomationProperties.Name="Copy registry format"/>
+                                <TextBlock Text="Registry / UUID" Style="{StaticResource Uefi.Caption}"
+                                           VerticalAlignment="Center" Margin="0"/>
+                            </DockPanel>
+                            <TextBox x:Name="RegistryTextBox" Style="{StaticResource Uefi.CodeBox}"
+                                     AutomationProperties.Name="Registry format"/>
+
+                            <Button Style="{StaticResource Uefi.Button}" Margin="0,14,0,0" Tag="&#xE77F;"
+                                    Content="Insert at caret" Click="InsertAtCaret_Click"
+                                    ToolTip="Insert the C structure at the caret in the active document (copies it to the clipboard when no document is open)"/>
+                        </StackPanel>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

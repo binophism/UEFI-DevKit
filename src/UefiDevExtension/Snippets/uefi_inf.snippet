@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>UEFI Application INF Template</Title>
+      <Author>MohammadMahdi Anbaraki</Author>
+      <Description>Standard EDK II Application .inf file skeleton</Description>
+      <Shortcut>uefiinf</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>BaseName</ID>
+          <ToolTip>Module Base Name</ToolTip>
+          <Default>MyApp</Default>
+        </Literal>
+        <Literal>
+          <ID>FileGuid</ID>
+          <ToolTip>Module GUID</ToolTip>
+          <Default>11111111-2222-3333-4444-555555555555</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="text">
+        <![CDATA[
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = $BaseName$
+  FILE_GUID                      = $FileGuid$
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain
+
+[Sources]
+  $BaseName$.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  BaseLib
+  DebugLib
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

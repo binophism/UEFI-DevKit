@@ -1,0 +1,10 @@
+# CMake / build output
+/build/
+
+# MSBuild / Visual Studio
+[Bb]in/
+[Oo]bj/
+.vs/
+*.vsix
+*.suo
+*.user.local
